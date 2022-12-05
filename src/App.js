@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ChakraProvider } from '@chakra-ui/react'
+
+import { Spinner } from '@chakra-ui/react'
 
 import CategoryList from './components/CategoryList';
 import Question from './components/Question';
@@ -82,25 +85,27 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {showNotification ? <div className={`notification ${isAnswerCorrect? 'successNotification' : 'failNotification'}`}>
-        <p>{notification}</p>
-      </div> : null}
-      <h3 className="title">WEB 2.5 TRIVIA</h3>
-      {isLoading ? (<div className="loader">
-        <p >LOADING...</p>
-      </div>) : null}
-      {
-        category ? (
-          <Question question={question} handleBack={handleBack} handleSubmitAnswer={handleSubmitAnswer}/>
-        ) : (
-          <CategoryList
-            categories={CATEGORIES}
-            handleSelectCategory={handleSelectCategory}
-          />
-        )
-      }
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        {showNotification ? <div className={`notification ${isAnswerCorrect? 'successNotification' : 'failNotification'}`}>
+          <p>{notification}</p>
+        </div> : null}
+        <h3 className="title">WEB 2.5 TRIVIA</h3>
+        {isLoading ? (<div className="loader">
+        <Spinner />
+        </div>) : null}
+        {
+          category ? (
+            <Question question={question} handleBack={handleBack} handleSubmitAnswer={handleSubmitAnswer}/>
+          ) : (
+            <CategoryList
+              categories={CATEGORIES}
+              handleSelectCategory={handleSelectCategory}
+            />
+          )
+        }
+      </div>
+    </ChakraProvider>
   );
 }
 
